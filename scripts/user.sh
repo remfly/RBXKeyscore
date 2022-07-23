@@ -20,13 +20,14 @@ echo -e "\nFetching..."
 
 uid="$(curl -s https://api.roblox.com/users/get-by-username?username=${name} | jq '.Id')"
 
-if [ ${uid} -lt 1 ]
+data="$(curl -s https://users.roblox.com/v1/users/${uid})"
+
+if [ "$(echo ${data} | jq '.name' | tr --delete '\"')" == "null" ]
 then
-    echo "No users with this name were found. Check your spelling and try again!"
+    echo -e "Failed!\n\nNo users with this name were found. Check your spelling and try again!\n"
     exit
 fi
 
-data="$(curl -s https://users.roblox.com/v1/users/${uid})"
 echo "Done!"
 
 cat << EOF
