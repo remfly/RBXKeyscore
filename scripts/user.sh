@@ -38,6 +38,7 @@ cat << EOF
 
 --- $(date +%m/%d/%Y) at $(date +%T) [UTC: $(date +%s)] ---
 
+ID: ${uid}
 Username: $(echo ${profile} | jq ".name" | tr --delete '\"')
 Display Name: $(echo ${profile} | jq ".displayName" | tr --delete '\"')
 Description: $(echo ${profile} | jq '.description' | tr --delete '\"')
