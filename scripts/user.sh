@@ -42,11 +42,11 @@ ID: ${uid}
 Username: $(echo ${profile} | jq ".name" | tr --delete '\"')
 Display Name: $(echo ${profile} | jq ".displayName" | tr --delete '\"')
 Description: $(echo ${profile} | jq '.description' | tr --delete '\"')
-Creation date: $(echo ${profile} | jq ".created" | tr --delete '\"')
+Past usernames: $(echo ${username_history} | jq '.data[] | .[]' | tr --delete '\"'  | tr '\n' ' ')
 Friends: $(echo ${friends} | jq '.count')
 Following: $(echo ${followings} | jq '.count')
 Followers: $(echo ${followers} | jq '.count')
-Past usernames: $(echo ${username_history} | jq '.data[] | .[]' | tr --delete '\"'  | tr '\n' ' ')
+Creation date: $(echo ${profile} | jq ".created" | tr --delete '\"')
 Profile: https://roblox.com/users/${uid}/profile
 
 EOF
