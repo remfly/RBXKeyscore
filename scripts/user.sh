@@ -45,14 +45,15 @@ cat << EOF
 ${bold}ID:${normal} ${uid}
 ${bold}Username:${normal} $(echo ${profile} | jq ".name" | tr --delete '\"')
 ${bold}Display Name:${normal} $(echo ${profile} | jq ".displayName" | tr --delete '\"')
-${bold}Description:${normal} $(echo ${profile} | jq '.description' | tr --delete '\"')
-${bold}Last location:${normal} $(echo ${presence} | jq '.userPresences[] | .lastLocation' | tr --delete '\"')
-${bold}Friends:${normal} $(echo ${friends} | jq '.count')
-${bold}Following:${normal} $(echo ${followings} | jq '.count')
-${bold}Followers:${normal} $(echo ${followers} | jq '.count')
-${bold}Past usernames:${normal} $(echo ${username_history} | jq '.data[] | .[]' | tr --delete '\"'  | tr '\n' ' ')
-${bold}Roblox badges:${normal} $(echo ${acc_info} | jq '.[] | .name' | tr --delete '\"' | tr '\n' ' ')
+${bold}Description:${normal} $(echo ${profile} | jq ".description" | tr --delete '\"')
+${bold}Last location:${normal} $(echo ${presence} | jq ".userPresences[] | .lastLocation" | tr --delete '\"')
+${bold}Friends:${normal} $(echo ${friends} | jq ".count")
+${bold}Following:${normal} $(echo ${followings} | jq ".count")
+${bold}Followers:${normal} $(echo ${followers} | jq ".count")
+${bold}Past usernames:${normal} $(echo ${username_history} | jq ".data[] | .[]" | cut -c 2-  | tr '\"\n' '; ')
+${bold}Roblox badges:${normal} $(echo ${acc_info} | jq ".[] | .name" | cut -c 2- | tr '\"\n' '; ')
 ${bold}Creation date:${normal} $(echo ${profile} | jq ".created" | tr --delete '\"')
+${bold}Banned:${normal} $(echo ${profile} | jq ".isBanned")
 ${bold}Profile:${normal} https://roblox.com/users/${uid}/profile
 
 ${bold}Search date:${normal} $(date +%m/%d/%Y) at $(date +%T) [UTC: $(date +%s)]
