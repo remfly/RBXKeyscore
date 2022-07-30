@@ -8,14 +8,23 @@ elif ! command -v "tr" &> /dev/null; then
     exit
 fi
 
-bold="$(tput bold)"
-normal="$(tput sgr0)"
 version=""
+use_bold=""
 
-if [ "${0}" == "./user.sh" ]; then
+if [[ "${0}" == "./user.sh" || "${0}" == "bash user.sh" ]]; then
     version="$(cat ../version)"
-elif [ "${0}" == "./scripts/user.sh" ]; then
+    use_bold="$(cat ../data/preferences.json)"
+elif [[ "${0}" == "./scripts/user.sh" || "${0}" == "bash scripts/user.sh" ]]; then
     version="$(cat ./version)"
+    use_bold="$(cat ./data/preferences.json)"
+fi
+
+if [ "$(echo ${use_bold} | jq '.[] | .useBold')" == true ]; then
+    bold="$(tput bold)"
+    normal="$(tput sgr0)"
+else
+    bold=""
+    normal=""
 fi
 
 echo -e "\n|---------------- ${bold}RBXKeyscore v${version}${normal} ----------------|\n\n"
@@ -26,17 +35,18 @@ echo -e "${normal}\nFetching..."
 
 uid="$(curl -s https://api.roblox.com/users/get-by-username?username=${name} | jq '.Id')"
 profile="$(curl -s https://users.roblox.com/v1/users/${uid})"
+
+if [ "$(echo ${profile} | jq '.name' | tr --delete '\"')" == "null" ]; then
+    echo -e "Failed!\n\nNo users with this name were found. Check your spelling and try again!\n"
+    exit
+fi
+
 username_history="$(curl -s https://users.roblox.com/v1/users/${uid}/username-history)"
 friends="$(curl -s https://friends.roblox.com/v1/users/${uid}/friends/count)"
 followings="$(curl -s https://friends.roblox.com/v1/users/${uid}/followings/count)"
 followers="$(curl -s https://friends.roblox.com/v1/users/${uid}/followers/count)"
 presence="$(curl -s -X POST --header 'Content-Type: application/json' -d {'userIds':[${uid}]} https://presence.roblox.com/v1/presence/users)"
 acc_info="$(curl -s https://accountinformation.roblox.com/v1/users/${uid}/roblox-badges)"
-
-if [ "$(echo ${profile} | jq '.name' | tr --delete '\"')" == "null" ]; then
-    echo -e "Failed!\n\nNo users with this name were found. Check your spelling and try again!\n"
-    exit
-fi
 
 echo "Done!"
 
