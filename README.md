@@ -2,8 +2,8 @@
 
 RBXKeyscore or "Roblox XKeyscore" is a collection of shell scripts that aim to provide, within the command line, easy access to combined features of the [Roblox API](https://api.roblox.com/docs).
 
-The [current version](./version) contains the following utility:
-- User Search 
+The [current version](https://github.com/remfly/RBXKeyscore/releases/tag/v0.2.0) contains the following utility:
+- User Search
 
 
 ## **Getting Started**
