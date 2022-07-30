@@ -41,12 +41,18 @@ if [ "$(echo ${profile} | jq '.name' | tr --delete '\"')" == "null" ]; then
     exit
 fi
 
-username_history="$(curl -s https://users.roblox.com/v1/users/${uid}/username-history)"
+if [ "$(echo ${profile} | jq '.isBanned')" == "true" ]; then
+    username_history=""
+else
+    username_history="$(curl -s https://users.roblox.com/v1/users/${uid}/username-history)"
+fi
+
 friends="$(curl -s https://friends.roblox.com/v1/users/${uid}/friends/count)"
 followings="$(curl -s https://friends.roblox.com/v1/users/${uid}/followings/count)"
 followers="$(curl -s https://friends.roblox.com/v1/users/${uid}/followers/count)"
 presence="$(curl -s -X POST --header 'Content-Type: application/json' -d {'userIds':[${uid}]} https://presence.roblox.com/v1/presence/users)"
 acc_info="$(curl -s https://accountinformation.roblox.com/v1/users/${uid}/roblox-badges)"
+
 
 echo "Done!"
 
