@@ -31,6 +31,7 @@ echo -e "\n|---------------- ${bold}RBXKeyscore v${version}${normal} -----------
 
 echo -n "Search user: ${bold}"
 read name
+name=$(echo ${name} | tr --delete " ")
 echo -e "${normal}\nFetching..."
 
 uid="$(curl -s https://api.roblox.com/users/get-by-username?username=${name} | jq '.Id')"
