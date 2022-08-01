@@ -15,8 +15,10 @@ Before anything, make sure you have [jq](https://stedolan.github.io/jq/) install
 ```bash
 # clone the repository
 $ git clone https://github.com/remfly/RBXKeyscore.git
+
 # cd into the directory
 $ cd RBXKeyscore/
+
 # run a script
 $ ./scripts/example.sh
 ```
