@@ -3,9 +3,6 @@
 if ! command -v "jq" &> /dev/null; then
     echo "You are missing a dependency. Install 'jq' and try again!"
     exit
-elif ! command -v "tr" &> /dev/null; then
-    echo "You are missing a dependency. Install 'tr' and try again!"
-    exit
 fi
 
 version=""
@@ -52,8 +49,7 @@ friends="$(curl -s https://friends.roblox.com/v1/users/${uid}/friends/count)"
 followings="$(curl -s https://friends.roblox.com/v1/users/${uid}/followings/count)"
 followers="$(curl -s https://friends.roblox.com/v1/users/${uid}/followers/count)"
 presence="$(curl -s -X POST --header 'Content-Type: application/json' -d {'userIds':[${uid}]} https://presence.roblox.com/v1/presence/users)"
-acc_info="$(curl -s https://accountinformation.roblox.com/v1/users/${uid}/roblox-badges)"
-
+acc_info="$(curl -s https://accountinformation.roblox.com/v1/users/${uid}/roblox-badges)" 
 
 echo "Done!"
 
